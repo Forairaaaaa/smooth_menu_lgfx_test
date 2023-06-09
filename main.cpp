@@ -108,14 +108,29 @@ void smooth_menu_test()
 
 
 #include "smooth_menu/src/menu/menu.h"
+#include "smooth_menu/src/selector/selector.h"
+
 
 
 struct My_menu_callback : public SMOOTH_MENU::MenuRenderCallback_t {
     void renderMenu(const SMOOTH_MENU::Item_t* item)
     {
-        _canvas->setTextColor(TFT_YELLOW);
+        _canvas->setTextColor(TFT_WHITE);
         _canvas->setTextSize(item->heigh / 24);
         _canvas->drawString(item->tag.c_str(), item->x, item->y);
+    }
+};
+
+
+struct My_selector_callback : public SMOOTH_MENU::SelectorRenderCallback_t {
+    void renderSelector(int x, int y, int width, int heigh)
+    {
+        _canvas->fillSmoothRoundRect(x, y, width, heigh, 5, TFT_ORANGE);
+
+        // printf("%d %d %d %d\n", x, y, width, heigh);
+
+
+        // _canvas->fillSmoothRoundRect(x, y, width, heigh, 5, Game_random(0, 0xFFFFFF));
     }
 };
 
@@ -138,25 +153,106 @@ void smooth_menu_test2()
     // menu.addItem("oofvbf", 10, 10 + 30 * 6, 40, 30);
 
 
-    menu.addItemVertically("asdfa", 50, 24);
-    menu.addItemVertically("qwe", 50, 24);
-    menu.addItemVertically("dfgg", 50, 24 * 2);
-    menu.addItemVertically("45364356", 50, 24 * 3);
-    menu.addItemVertically("as^^^dfa", 50, 24);
-    menu.addItemVertically("???da", 50, 24);
-    menu.addItemVertically("!!!99090", 50, 24 * 5);
-    menu.addItemVertically("!...//?", 50, 24);
+    // menu.addItemVertically("asdfa", 12 * 5, 24);
+    // menu.addItemVertically("qwe", 12 * 3, 24);
+    // menu.addItemVertically("dfgg", 12 * 2 * 4, 24 * 2);
+    // menu.addItemVertically("45364356", 12 * 3 * 8, 24 * 3);
+    // menu.addItemVertically("as^^^dfa", 12 * 8, 24);
+    // menu.addItemVertically("愣头青", 12 * 10, 24);
+    // menu.addItemVertically("!...//?", 12 * 7, 24);
+    // menu.addItemVertically("???da", 12 * 5, 24);
+    // menu.addItemVertically("!!!99090", 12 * 5 * 8, 24 * 5);
+    // menu.addItemVertically("多捞啊", 12 * 10, 24);
+    // menu.addItemVertically("<><><><>", 12 * 8, 24);
+    // menu.addItemVertically("~~~~...", 12 * 7, 24);
+
+
+
+    // menu.addItemHorizontally("asdfa", 12 * 5, 24);
+    // menu.addItemHorizontally("qwe", 12 * 3, 24);
+    // menu.addItemHorizontally("dfgg", 12 * 2 * 4, 24 * 2);
+    // menu.addItemHorizontally("45364356", 12 * 3 * 8, 24 * 3);
+    // menu.addItemHorizontally("as^^^dfa", 12 * 8, 24);
+    // menu.addItemHorizontally("愣头青", 12 * 10, 24);
+    // menu.addItemHorizontally("!...//?", 12 * 7, 24);
+    // menu.addItemHorizontally("???da", 12 * 5, 24);
+    // menu.addItemHorizontally("!!!99090", 12 * 5 * 8, 24 * 5);
+    // menu.addItemHorizontally("多捞啊", 12 * 10, 24);
+    // menu.addItemHorizontally("<><><><>", 12 * 8, 24);
+    // menu.addItemHorizontally("~~~~...", 12 * 7, 24);
+
+
+
+    menu.addItemVertically("asdfa", 12 * 5, 24, 0);
+    menu.addItemVertically("qwe", 12 * 3, 24, 50);
+    menu.addItemVertically("dfgg", 12 * 2 * 4, 24 * 2, 30);
+    menu.addItemVertically("45364356", 12 * 3 * 8, 24 * 3, 200);
+    menu.addItemVertically("as^^^dfa", 12 * 8, 24, 100);
+    menu.addItemVertically("愣头青", 12 * 10, 24, 300);
+    menu.addItemVertically("!...//?", 12 * 7, 24, 100);
+    menu.addItemVertically("???da", 12 * 5, 24, 20);
+    menu.addItemVertically("!!!99090", 12 * 5 * 8, 24 * 5, 0);
+    menu.addItemVertically("多捞啊", 12 * 10, 24, 250);
+    menu.addItemVertically("<><><><>", 12 * 8, 24, 80);
+    menu.addItemVertically("~~~~...", 12 * 7, 24, 20);
+
+
+    
 
 
     printf("size: %d\n", (int)menu.getItemNum());
 
-    
+
+
+
+
+    SMOOTH_MENU::Selector_t selector;
+    My_selector_callback selector_cb;
+
+    selector.setMenu(&menu);
+    selector.setRenderCallback(&selector_cb);
+
+
+
+
+
+
+
+
+    int i = 0;
 
     while (1) {
 
         _canvas->clear();
-        menu.renderMenu();
+
+
+        selector.update(SDL_GetTicks());
+
+
         _canvas_update();
+
+
+
+
+        if (lgfx::gpio_in(PIN_UP) == 0) {
+
+            while (lgfx::gpio_in(PIN_UP) == 0);
+
+            selector.goLast();
+            
+            printf("go to %d\n", selector.getTargetItem());
+        }
+        else if (lgfx::gpio_in(PIN_DOWN) == 0) {
+
+            while (lgfx::gpio_in(PIN_DOWN) == 0);
+
+            selector.goNext();
+
+            printf("go to %d\n", selector.getTargetItem());
+        }
+
+
+
 
     }
 
