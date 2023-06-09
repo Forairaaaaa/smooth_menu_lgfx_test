@@ -31,8 +31,12 @@ target_include_directories(LGFX PUBLIC "Lib/LovyanGFX/src/")
 find_package(SDL2 REQUIRED SDL2)
 
 
+# Smooth menu
+add_subdirectory(smooth_menu)
+
+
 add_executable(main ${SRC_FILES})
-target_link_libraries(main -lpthread LGFX SDL2)
+target_link_libraries(main -lpthread LGFX SDL2 smooth_menu)
 
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})

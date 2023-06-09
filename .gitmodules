@@ -1,3 +1,6 @@
 [submodule "Lib/LovyanGFX"]
 	path = Lib/LovyanGFX
 	url = https://github.com/lovyan03/LovyanGFX.git
+[submodule "smooth_menu"]
+	path = smooth_menu
+	url = git@github.com:Forairaaaaa/smooth_menu.git
