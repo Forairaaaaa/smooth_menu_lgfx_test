@@ -16,8 +16,8 @@
 #include <LovyanGFX.hpp>
 #include <LGFX_AUTODETECT.hpp>
 
-static LGFX lcd(240, 135);
-// static LGFX Lcd(320, 240);
+// static LGFX lcd(240, 135);
+static LGFX lcd(720, 480);
 
 static LGFX_Sprite* _canvas;
 #define _canvas_update() _canvas->pushSprite(0, 0)
@@ -107,9 +107,63 @@ void smooth_menu_test()
 
 
 
+#include "smooth_menu/src/menu/menu.h"
+
+
+struct My_menu_callback : public SMOOTH_MENU::MenuRenderCallback_t {
+    void renderMenu(const SMOOTH_MENU::Item_t* item)
+    {
+        _canvas->setTextColor(TFT_YELLOW);
+        _canvas->setTextSize(item->heigh / 24);
+        _canvas->drawString(item->tag.c_str(), item->x, item->y);
+    }
+};
 
 
 
+void smooth_menu_test2()
+{
+    SMOOTH_MENU::Menu_t menu;
+
+    My_menu_callback mycb;
+    menu.setRenderCallback(&mycb);
+
+
+    // menu.addItem("aaaa", 10, 10, 40, 30);
+    // menu.addItem("bb", 10, 10 + 30, 40, 30);
+    // menu.addItem("aaaasdasda", 10, 10 + 30 * 2, 40, 30);
+    // menu.addItem("yyy", 10, 10 + 30 * 3, 40, 30);
+    // menu.addItem("???", 10, 10 + 30 * 4, 40, 30);
+    // menu.addItem("aa1234123aa", 10, 10 + 30 * 5, 40, 30);
+    // menu.addItem("oofvbf", 10, 10 + 30 * 6, 40, 30);
+
+
+    menu.addItemVertically("asdfa", 50, 24);
+    menu.addItemVertically("qwe", 50, 24);
+    menu.addItemVertically("dfgg", 50, 24 * 2);
+    menu.addItemVertically("45364356", 50, 24 * 3);
+    menu.addItemVertically("as^^^dfa", 50, 24);
+    menu.addItemVertically("???da", 50, 24);
+    menu.addItemVertically("!!!99090", 50, 24 * 5);
+    menu.addItemVertically("!...//?", 50, 24);
+
+
+    printf("size: %d\n", (int)menu.getItemNum());
+
+    
+
+    while (1) {
+
+        _canvas->clear();
+        menu.renderMenu();
+        _canvas_update();
+
+    }
+
+
+
+
+}
 
 
 
@@ -127,12 +181,15 @@ void setup()
 
 
 
+    _canvas->setFont(&fonts::efontCN_24);
+
 }
 
 
 
 void loop()
 {
-    smooth_menu_test();
+    // smooth_menu_test();
+    smooth_menu_test2();
 }
 
