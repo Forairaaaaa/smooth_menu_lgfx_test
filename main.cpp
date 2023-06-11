@@ -346,10 +346,34 @@ struct My_SimpleMenu_CB : public SMOOTH_MENU::SimpleMenuCallback_t {
 
 
         
+        // /* Draw selector */
+        // _canvas->fillSmoothRoundRect(
+        //     selector.x - camera.x,
+        //     // selector.x - camera.x - (selector.width - menuItemList[selector.targetItem]->width) / 2,
+        //     selector.y - camera.y + (menuItemList[selector.targetItem]->height - selector.height) / 2,
+        //     selector.width,
+        //     selector.height,
+        //     5, TFT_SKYBLUE);
+
+        // /* Draw menu */
+        // for (int i = 0; i < menuItemList.size(); i++) {
+        //     _canvas->setTextColor(TFT_WHITE);
+        //     _canvas->setTextSize(menuItemList[i]->height / 24);
+        //     _canvas->drawString(menuItemList[i]->tag.c_str(), menuItemList[i]->x - camera.x, menuItemList[i]->y - camera.y);
+        // }
+
+        // /* Draw camera */
+        // _canvas->drawRect(0, 0, camera.width, camera.height, TFT_GREENYELLOW);
+
+
+
+
+        // _canvas->fillScreen(TFT_LIGHTGREY);
+
         /* Draw selector */
         _canvas->fillSmoothRoundRect(
-            selector.x - camera.x,
-            // selector.x - camera.x - (selector.width - menuItemList[selector.targetItem]->width) / 2,
+            // selector.x - camera.x,
+            selector.x - camera.x - (selector.width - menuItemList[selector.targetItem]->width) / 2 + (camera.width / 2 - menuItemList[selector.targetItem]->width / 2) ,
             selector.y - camera.y + (menuItemList[selector.targetItem]->height - selector.height) / 2,
             selector.width,
             selector.height,
@@ -359,11 +383,12 @@ struct My_SimpleMenu_CB : public SMOOTH_MENU::SimpleMenuCallback_t {
         for (int i = 0; i < menuItemList.size(); i++) {
             _canvas->setTextColor(TFT_WHITE);
             _canvas->setTextSize(menuItemList[i]->height / 24);
-            _canvas->drawString(menuItemList[i]->tag.c_str(), menuItemList[i]->x - camera.x, menuItemList[i]->y - camera.y);
+            // _canvas->drawString(menuItemList[i]->tag.c_str(), menuItemList[i]->x - camera.x, menuItemList[i]->y - camera.y);
+            _canvas->drawCenterString(menuItemList[i]->tag.c_str(), camera.width / 2, menuItemList[i]->y - camera.y);
         }
 
         /* Draw camera */
-        _canvas->drawRect(0, 0, camera.width, camera.height, TFT_GREENYELLOW);
+        _canvas->drawRect(0, 0, camera.width, camera.height, TFT_SKYBLUE);
 
 
 
@@ -407,18 +432,18 @@ void smooth_menu_test3()
 
 
 
-    simple_menu.getMenu()->addItemVertically("asdfa", 12 * 5, 24);
-    simple_menu.getMenu()->addItemVertically("qwe", 12 * 3, 24);
-    simple_menu.getMenu()->addItemVertically("dfgg", 12 * 2 * 4, 24 * 2);
-    simple_menu.getMenu()->addItemVertically("45364356", 12 * 3 * 8, 24 * 3);
-    simple_menu.getMenu()->addItemVertically("as^^^dfa", 12 * 8, 24);
-    simple_menu.getMenu()->addItemVertically("愣头青", 12 * 10, 24);
-    simple_menu.getMenu()->addItemVertically("!...//?", 12 * 7, 24);
-    simple_menu.getMenu()->addItemVertically("???da", 12 * 5, 24);
-    simple_menu.getMenu()->addItemVertically("!!!99090", 12 * 5 * 8, 24 * 5);
-    simple_menu.getMenu()->addItemVertically("多捞啊", 12 * 10, 24);
-    simple_menu.getMenu()->addItemVertically("<><><><>", 12 * 8, 24);
-    simple_menu.getMenu()->addItemVertically("~~~~...", 12 * 7, 24);
+    // simple_menu.getMenu()->addItemVertically("asdfa", 12 * 5, 24);
+    // simple_menu.getMenu()->addItemVertically("qwe", 12 * 3, 24);
+    // simple_menu.getMenu()->addItemVertically("dfgg", 12 * 2 * 4, 24 * 2);
+    // simple_menu.getMenu()->addItemVertically("45364356", 12 * 3 * 8, 24 * 3);
+    // simple_menu.getMenu()->addItemVertically("as^^^dfa", 12 * 8, 24);
+    // simple_menu.getMenu()->addItemVertically("愣头青", 12 * 10, 24);
+    // simple_menu.getMenu()->addItemVertically("!...//?", 12 * 7, 24);
+    // simple_menu.getMenu()->addItemVertically("???da", 12 * 5, 24);
+    // simple_menu.getMenu()->addItemVertically("!!!99090", 12 * 5 * 8, 24 * 5);
+    // simple_menu.getMenu()->addItemVertically("多捞啊", 12 * 10, 24);
+    // simple_menu.getMenu()->addItemVertically("<><><><>", 12 * 8, 24);
+    // simple_menu.getMenu()->addItemVertically("~~~~...", 12 * 7, 24);
 
 
     // simple_menu.getMenu()->addItemVertically("asdfa", 12 * 5, 24, 0);
@@ -435,6 +460,23 @@ void smooth_menu_test3()
     // simple_menu.getMenu()->addItemVertically("~~~~...", 12 * 7, 24, 20);
 
 
+    simple_menu.getMenu()->addItemVertically("asdfa", 12 * 5, 24);
+    simple_menu.getMenu()->addItemVertically("qwe", 12 * 3, 24);
+    simple_menu.getMenu()->addItemVertically("dfgg", 12 * 4, 24);
+    simple_menu.getMenu()->addItemVertically("45364356", 12 * 8, 24);
+    simple_menu.getMenu()->addItemVertically("as^^^dfa", 12 * 8, 24);
+    simple_menu.getMenu()->addItemVertically("愣头青", 12 * 6, 24);
+    simple_menu.getMenu()->addItemVertically("!...//?", 12 * 7, 24);
+    simple_menu.getMenu()->addItemVertically("???da", 12 * 5, 24);
+    simple_menu.getMenu()->addItemVertically("!!!99090", 12 * 8, 24);
+    simple_menu.getMenu()->addItemVertically("多捞啊", 12 * 6, 24);
+    simple_menu.getMenu()->addItemVertically("<><><><>", 12 * 8, 24);
+    simple_menu.getMenu()->addItemVertically("~~~~...", 12 * 7, 24);
+
+
+   
+
+
 
 
     while (1) {
@@ -442,15 +484,27 @@ void smooth_menu_test3()
         simple_menu.update(SDL_GetTicks());
 
 
-
+        int time_count = 0;
         if (lgfx::gpio_in(PIN_DOWN) == 0) {
             simple_menu.goNext();
-            while (lgfx::gpio_in(PIN_DOWN) == 0) { simple_menu.update(SDL_GetTicks()); }
+            while (lgfx::gpio_in(PIN_DOWN) == 0) {
+                simple_menu.update(SDL_GetTicks());
+                time_count++;
+                if (time_count > 20) {
+                    break;
+                }
+            }
         }
 
         if (lgfx::gpio_in(PIN_UP) == 0) {
             simple_menu.goLast();
-            while (lgfx::gpio_in(PIN_UP) == 0) { simple_menu.update(SDL_GetTicks()); }
+            while (lgfx::gpio_in(PIN_UP) == 0) {
+                simple_menu.update(SDL_GetTicks());
+                time_count++;
+                if (time_count > 20) {
+                    break;
+                }
+            }
         }
 
 
